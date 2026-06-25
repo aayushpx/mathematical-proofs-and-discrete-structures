@@ -1,0 +1,111 @@
+% ═════════════════════════════════════════════════════════════════════════════
+\section{RSA Public-Key Cryptography}
+% ═════════════════════════════════════════════════════════════════════════════
+
+RSA is a public-key cryptosystem based on the difficulty of factoring the
+product of two large primes. A public key $(n, e)$ is used for encryption;
+a private key $d$ is used for decryption. The security of the scheme rests on
+the following structure.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Background}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Choose two distinct primes $p$ and $q$. Set $n = pq$ and $\phi(n) = (p-1)(q-1)$.
+Choose $e$ with $\gcd(e, \phi(n)) = 1$ (the \emph{encryption exponent}), and
+find $d$ with
+\[
+    ed \equiv 1 \pmod{\phi(n)}
+\]
+(the \emph{decryption exponent}). To encrypt a message block $m < n$:
+\[
+    E(m) = m^e \pmod{n}.
+\]
+To decrypt a ciphertext block $c$:
+\[
+    D(c) = c^d \pmod{n}.
+\]
+By Euler's theorem, $D(E(m)) = m^{ed} \equiv m \pmod{n}$.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Finding the Decryption Key}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\textbf{Public key:} $n = 11009$, $e = 1507$. It is given that $n = 101 \times 109$.
+
+\subsection{Computing \texorpdfstring{$\phi(n)$}{φ(n)}}
+
+\[
+    \phi(n) = (p-1)(q-1) = (101-1)(109-1) = 100 \times 108 = 10800.
+\]
+
+\subsection{Verifying \texorpdfstring{$\gcd(e, \phi(n)) = 1$}{gcd(e,φ(n))=1}}
+
+We first confirm that $e = 1507$ and $\phi(n) = 10800$ are coprime, as required.
+This is verified by the computation below, which produces remainder $1$.
+
+\subsection{Extended Euclidean Algorithm}
+
+We seek $d$ such that $10800x + 1507d = 1$ (i.e.\ $1507d \equiv 1 \pmod{10800}$).
+
+\textbf{Forward pass (Euclidean algorithm):}
+\begin{align*}
+    10800 &= 1507 \times 7 + 251, \\
+    1507  &= 251  \times 6 + 1, \\
+    251   &= 1    \times 251 + 0.
+\end{align*}
+The last non-zero remainder is $1$, confirming $\gcd(1507, 10800) = 1$.
+
+\textbf{Back-substitution:}
+\begin{align*}
+    1 &= 1507 - 251 \times 6 \\
+      &= 1507 - 6(10800 - 1507 \times 7) \\
+      &= 1507 \times 43 + 10800 \times (-6).
+\end{align*}
+Hence $1507 \times 43 \equiv 1 \pmod{10800}$.
+
+\[
+    \boxed{d = 43.}
+\]
+
+\textbf{Check:} $1507 \times 43 = 64\,801 = 6 \times 10800 + 1$. \checkmark
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Decrypting the Message}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Bob sends the ciphertext blocks (in 4-digit groups):
+\[
+    R = 8901 \quad 4422 \quad 5873 \quad 0856 \quad 6130 \quad 7864.
+\]
+
+Decryption uses $D(c) = c^{43} \pmod{11009}$ for each block. The resulting
+plaintext blocks are converted to ASCII by splitting each 4-digit number into
+two 2-digit codes (blank $= 32$, letters $A$--$Z$ map to $65$--$90$).
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{ccccc}
+    \hline
+    \textbf{Ciphertext} & \textbf{Decrypted} & \textbf{Split} & \textbf{ASCII} & \textbf{Characters} \\
+    \hline
+    $8901$ & $6776$ & $67,\;76$ & C, L & CL \\
+    $4422$ & $6965$ & $69,\;65$ & E, A & EA \\
+    $5873$ & $8232$ & $82,\;32$ & R, \textvisiblespace & R\textvisiblespace \\
+    $0856$ & $6583$ & $65,\;83$ & A, S & AS \\
+    $6130$ & $3277$ & $32,\;77$ & \textvisiblespace, M & \textvisiblespace M \\
+    $7864$ & $8568$ & $85,\;68$ & U, D & UD \\
+    \hline
+\end{tabular}
+\end{center}
+
+\medskip
+The decrypted message is:
+\[
+    \textbf{CLEAR AS MUD.}
+\]
+
+\begin{remark}
+The modular exponentiations $c^{43} \pmod{11009}$ above were computed using
+repeated squaring (e.g.\ $c^{43} = c^{32} \cdot c^8 \cdot c^2 \cdot c^1$).
+\end{remark}

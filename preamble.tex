@@ -1,0 +1,232 @@
+% preamble.tex
+% Shared packages and macros for all documents in this repository.
+% Usage: \input{preamble} placed immediately after \documentclass.
+
+% ══════════════════════════════════════════════════════════════════════════════
+% PAGE GEOMETRY
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage[a4paper, margin=0.95in, top=1.1in, bottom=1.1in, headheight=14pt]{geometry}
+
+% Professional typography
+\parindent=0pt
+\parskip=0.75\baselineskip plus 0.4\baselineskip minus 0.3\baselineskip
+\raggedbottom
+
+% ══════════════════════════════════════════════════════════════════════════════
+% MATH PACKAGES
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+
+% Optimal math spacing for readability
+\thinmuskip=3mu
+\medmuskip=4mu plus 1mu
+\thickmuskip=5mu plus 2mu
+
+\AtBeginDocument{
+    \abovedisplayskip=1.0\baselineskip plus 0.5\baselineskip
+    \abovedisplayshortskip=0.5\baselineskip plus 0.3\baselineskip
+    \belowdisplayskip=1.0\baselineskip plus 0.5\baselineskip
+    \belowdisplayshortskip=0.5\baselineskip plus 0.3\baselineskip
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% TYPOGRAPHY & LINE SPACING
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage[none]{hyphenat}
+\usepackage{microtype}
+
+% Enhanced line spacing for professional appearance
+\renewcommand{\baselinestretch}{1.25}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% HEADERS AND FOOTERS
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\small\textsc{\leftmark}}
+\fancyhead[R]{\small\textit{Discrete Mathematics Notes}}
+\fancyfoot[C]{\small\thepage}
+
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% SECTION STYLING
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{titlesec}
+
+% Section: prominent, strong hierarchy
+\titleformat{\section}
+    {\Large\bfseries\sffamily}
+    {\thesection}
+    {0.7em}
+    {}
+    [\vspace{0.3\baselineskip}\hrule\vspace{0.4\baselineskip}]
+
+\titlespacing{\section}
+    {0pt}
+    {1.8\baselineskip plus 0.5\baselineskip}
+    {0.7\baselineskip plus 0.3\baselineskip}
+
+% Subsection: clear but subordinate
+\titleformat{\subsection}
+    {\large\bfseries}
+    {\thesubsection}
+    {0.6em}
+    {}
+
+\titlespacing{\subsection}
+    {0pt}
+    {1.3\baselineskip plus 0.4\baselineskip}
+    {0.6\baselineskip plus 0.2\baselineskip}
+
+% Subsubsection: subtle, for fine structure
+\titleformat{\subsubsection}
+    {\normalsize\bfseries}
+    {\thesubsubsection}
+    {0.5em}
+    {}
+
+\titlespacing{\subsubsection}
+    {0pt}
+    {0.9\baselineskip plus 0.2\baselineskip}
+    {0.4\baselineskip plus 0.1\baselineskip}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% LISTS
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{enumitem}
+\usepackage{cancel}
+
+\setlist[enumerate]{
+    leftmargin=2.2em,
+    itemsep=0.5\baselineskip,
+    parsep=0.3\baselineskip,
+    topsep=0.5\baselineskip
+}
+
+\setlist[itemize]{
+    leftmargin=2.2em,
+    itemsep=0.5\baselineskip,
+    parsep=0.3\baselineskip,
+    topsep=0.5\baselineskip
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% THEOREM ENVIRONMENTS
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{thmtools}
+\usepackage{xcolor}
+
+% Main theorems: prominent with subtle background
+\declaretheoremstyle[
+    headfont=\bfseries,
+    bodyfont=\normalfont,
+    spaceabove=1.0\baselineskip,
+    spacebelow=0.8\baselineskip,
+    postheadspace=0.7em,
+    headpunct=.,
+    notefont=\normalfont,
+    notebraces=,
+]{thmstyle}
+
+\declaretheorem[style=thmstyle, numberwithin=section]{theorem}
+\declaretheorem[style=thmstyle, numberwithin=section]{proposition}
+\declaretheorem[style=thmstyle, numberwithin=section]{lemma}
+\declaretheorem[style=thmstyle, numberwithin=section]{corollary}
+
+% Definitions: clearly distinguished
+\declaretheoremstyle[
+    headfont=\bfseries,
+    bodyfont=\normalfont,
+    spaceabove=0.85\baselineskip,
+    spacebelow=0.7\baselineskip,
+    postheadspace=0.7em,
+    headpunct=.,
+    notefont=\normalfont,
+    notebraces=,
+]{defstyle}
+
+\declaretheorem[style=defstyle, numberwithin=section]{definition}
+\declaretheorem[style=defstyle, numberwithin=section]{example}
+
+% Remarks and notes: subtle, unnumbered
+\declaretheoremstyle[
+    headfont=\itshape\bfseries,
+    bodyfont=\normalfont,
+    spaceabove=0.6\baselineskip,
+    spacebelow=0.5\baselineskip,
+    postheadspace=0.6em,
+    headpunct=.,
+    notefont=\normalfont,
+    notebraces=,
+]{remstyle}
+
+\declaretheorem[style=remstyle, unnumbered]{remark}
+\declaretheorem[style=remstyle, unnumbered]{note}
+
+% Proof environment with proper styling
+\renewcommand\proofname{\bfseries Proof}
+\let\oldproof\proof
+\renewcommand{\proof}{%
+    \oldproof[\proofname]%
+    \normalfont
+}
+
+% Improved proof end symbol spacing
+\renewcommand{\qedhere}{\quad\qedsymbol}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% GRAPHICS & DIAGRAMS
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% MATRICES
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{blkarray}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% HYPERLINKS
+% ══════════════════════════════════════════════════════════════════════════════
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    urlcolor=blue!70!black,
+    bookmarksnumbered=true,
+    pdfborder={0 0 0}
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% NUMBER SET NOTATION
+% ══════════════════════════════════════════════════════════════════════════════
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Ztwo}{\mathbb{Z}_2}
+\newcommand{\Qstar}{\mathbb{Q}^{*}}
+\newcommand{\Rplus}{\mathbb{R}^{+}}
+\newcommand{\Rtwo}{\mathbb{R}^{2}}
+
+% ══════════════════════════════════════════════════════════════════════════════
+% UTILITY MACROS
+% ══════════════════════════════════════════════════════════════════════════════
+
+\newcommand{\Rel}{\mathcal{R}}
+\newcommand{\defn}[1]{\textit{#1}}

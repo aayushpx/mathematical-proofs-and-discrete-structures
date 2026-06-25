@@ -1,0 +1,201 @@
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Propositional Logic}
+% ═════════════════════════════════════════════════════════════════════════════
+
+These notes develop the core tools of propositional logic: truth tables,
+algebraic proof of logical equivalence, validity of arguments, and the
+negation of quantified statements.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Truth Tables and Propositional Form}
+% ═════════════════════════════════════════════════════════════════════════════
+
+A \defn{truth table} lists the truth value of a compound proposition for every
+possible assignment of truth values to its constituent variables. With $n$
+propositional variables, there are $2^n$ rows.
+
+\subsection{A worked example}
+
+Consider the proposition
+\[
+    X = (p \to q) \lor (p \land r).
+\]
+Since $X$ depends on three variables, there are $2^3 = 8$ rows. We use the
+equivalence $p \to q \equiv {\sim}p \lor q$ to expand the implication before
+constructing the table.
+
+\[
+\begin{array}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    p & q & r & {\sim}p & p \land r & {\sim}p \lor q & p \to q
+      & (p \to q) \lor (p \land r) & X \\
+    \hline
+    0 & 0 & 0 & 1 & 0 & 1 & 1 & 1 & 1 \\
+    0 & 0 & 1 & 1 & 0 & 1 & 1 & 1 & 1 \\
+    0 & 1 & 0 & 1 & 0 & 1 & 1 & 1 & 1 \\
+    0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 \\
+    1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    1 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 \\
+    1 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    1 & 1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 \\
+    \hline
+\end{array}
+\]
+
+\subsection{Consequences of the truth table}
+
+\begin{proposition}
+$X$ is not a tautology.
+\end{proposition}
+\begin{proof}
+Row 5 of the table (where $p = 1$, $q = 0$, $r = 0$) gives $X = 0$.
+Since $X$ is false for at least one assignment, it is not a tautology.
+\end{proof}
+
+\begin{proposition}
+If $p$ is true, $X$ can be false.
+\end{proposition}
+\begin{proof}
+When $p = 1$, $q = 0$, and $r = 0$, the table gives $X = 0$.
+\end{proof}
+
+\begin{proposition}
+If $q$ is true, $X$ cannot be false.
+\end{proposition}
+\begin{proof}
+The unique row where $X = 0$ is row 5, in which $q = 0$. Hence no assignment
+with $q = 1$ makes $X$ false.
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Proving Logical Equivalence}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Two propositions are \defn{logically equivalent} if they share the same truth
+value under every assignment of truth values to their variables. Rather than
+constructing a joint truth table, equivalence can often be established by
+applying the standard algebraic laws of propositional logic (Implication,
+De Morgan, Commutativity, Distribution, etc.) in sequence.
+
+\begin{proposition}
+The propositions $p \to (q \lor {\sim}r)$ and ${\sim}(p \land r \land {\sim}q)$
+are logically equivalent.
+\end{proposition}
+
+\begin{proof}
+\begin{align*}
+    p \to (q \lor {\sim}r)
+    &\equiv {\sim}p \lor (q \lor {\sim}r)
+    \tag{Implication: $\phi\to\psi\equiv{\sim}\phi\lor\psi$}\\
+    &\equiv {\sim}p \lor {\sim}r \lor q
+    \tag{Commutativity and Associativity}\\
+    &\equiv {\sim}(p \land r \land {\sim}q).
+    \tag{De Morgan: ${\sim}(A\land B\land C)\equiv{\sim}A\lor{\sim}B\lor{\sim}C$}
+\end{align*}
+Hence $p \to (q \lor {\sim}r) \equiv {\sim}(p \land r \land {\sim}q)$.
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Argument Validity via Proof by Contradiction}
+% ═════════════════════════════════════════════════════════════════════════════
+
+An argument with premises $P_1, \ldots, P_n$ and conclusion $C$ is
+\defn{valid} if and only if it is impossible for every premise to be true
+while the conclusion is false. Equivalently: assume all premises true and
+$C$ false, then derive a contradiction.
+
+\begin{example}
+Determine whether the following argument is valid or invalid.
+\[
+\begin{array}{l}
+    p \lor {\sim}q \\
+    {\sim}(p \land r) \\
+    r \lor s \\
+    \hline
+    q \to s
+\end{array}
+\]
+\end{example}
+
+\begin{proof}[Solution]
+Assume all premises are true and the conclusion is false:
+\begin{alignat}{2}
+    &p \lor {\sim}q \equiv 1, \tag{P1}\\
+    &{\sim}(p \land r) \equiv 1, \tag{P2}\\
+    &r \lor s \equiv 1, \tag{P3}\\
+    &q \to s \equiv 0. \tag{C}
+\end{alignat}
+
+\noindent\textbf{From (C).}
+Using $q \to s \equiv {\sim}q \lor s$, a disjunction is false only when both
+disjuncts are false. Therefore $q = 1$ and $s = 0$.
+
+\noindent\textbf{From (P1).}
+Since $q = 1$, we have ${\sim}q = 0$, so $p$ must be true to satisfy
+$p \lor {\sim}q$. Hence $p = 1$.
+
+\noindent\textbf{From (P2).}
+Expanding: ${\sim}(p \land r) \equiv {\sim}p \lor {\sim}r$. Since $p = 1$,
+we have ${\sim}p = 0$, so ${\sim}r = 1$, giving $r = 0$.
+
+\noindent\textbf{From (P3).}
+With $r = 0$ and $s = 0$, we get $r \lor s = 0 \lor 0 = 0$, contradicting (P3).
+
+The premises cannot all be simultaneously true when the conclusion is false.
+Therefore the argument is \textbf{valid}.
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Quantifiers and Negation}
+% ═════════════════════════════════════════════════════════════════════════════
+
+To negate a quantified statement, each quantifier is switched and the
+predicate is negated:
+\[
+    \lnot\,\forall x\; P(x) \;\equiv\; \exists x\; \lnot P(x),
+    \qquad
+    \lnot\,\exists x\; P(x) \;\equiv\; \forall x\; \lnot P(x).
+\]
+When multiple quantifiers appear, they are switched from left to right.
+
+\begin{example}\label{ex:negations}
+State the negation of each proposition.
+\begin{enumerate}[label=(\alph*)]
+    \item $\forall$ $2 \times 2$ matrices $A, B$: $\det(AB) = \det(BA)$.
+    \item $\forall$ integers $n \geq 5$, $\exists$ integers $a, b \geq 0$
+          such that $n = 3a + 5b$.
+    \item $\forall x \geq 4,\; \forall y \geq x,\; \exists z \geq 7$ such
+          that $x + y = z$.
+\end{enumerate}
+\end{example}
+
+\begin{proof}[Negations]
+\begin{enumerate}[label=(\alph*)]
+    \item $\exists$ $2 \times 2$ matrices $A, B$ such that
+          $\det(AB) \neq \det(BA)$.
+
+    \item $\exists$ integer $n \geq 5$ such that $\forall$ integers
+          $a, b \geq 0$, $n \neq 3a + 5b$.
+
+    \item $\exists x \geq 4,\; \exists y \geq x$ such that
+          $\forall z \geq 7$, $x + y \neq z$.
+\end{enumerate}
+\end{proof}
+
+\begin{proposition}
+Proposition \textup{(c)} in Example~\ref{ex:negations} is true.
+\end{proposition}
+
+% CORRECTION: The original argument cited two specific numerical examples
+% (x=4,y=4 and x=100,y=101) as justification, but examples do not constitute
+% a proof. The correct argument makes the inequality chain explicit.
+
+\begin{proof}
+Let $x \geq 4$ and $y \geq x$ be arbitrary real numbers. Since $y \geq x$,
+\[
+    x + y \geq x + x = 2x \geq 2 \cdot 4 = 8 > 7.
+\]
+Set $z = x + y$. Then $z \geq 8 \geq 7$, so the condition $z \geq 7$ is
+satisfied, and trivially $x + y = z$. Since $x$ and $y$ were arbitrary, the
+proposition holds for all valid choices.
+\end{proof}

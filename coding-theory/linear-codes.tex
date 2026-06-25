@@ -1,0 +1,276 @@
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Binary Linear Codes}
+% ═════════════════════════════════════════════════════════════════════════════
+
+A \defn{binary linear code} $C$ is a subspace of $\mathbb{F}_2^n$. It may be
+specified as the nullspace of a \defn{parity check matrix} $A$:
+\[
+    C = \ker(A) = \{\mathbf{x} \in \mathbb{F}_2^n : A\mathbf{x} = \mathbf{0}\}.
+\]
+The \defn{syndrome} of a received word $\mathbf{r}$ is $A\mathbf{r}$.
+If the syndrome is $\mathbf{0}$, then $\mathbf{r} \in C$; otherwise an error
+has occurred.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{The Code and Its Basis}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Let $C = \ker(A)$ where
+\[
+    A =
+    \begin{bmatrix}
+        1 & 0 & 1 & 0 & 0 & 1 \\
+        1 & 1 & 1 & 0 & 1 & 0 \\
+        1 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 1 & 1 & 0
+    \end{bmatrix}.
+\]
+
+% CORRECTION: The original rref computation was incorrect. The matrix A has
+% rank 3 (since R2 = R3 + R4 mod 2), giving a code of dimension 6-3 = 3,
+% not dimension 2 as implied by the original (erroneous) rref of rank 4.
+% The basis below is corrected accordingly.
+
+\begin{note}
+One can verify that $R_2 = R_3 + R_4 \pmod{2}$, so the rows of $A$ are
+linearly dependent over $\mathbb{F}_2$ and $\mathrm{rank}(A) = 3$.
+Hence $\dim(C) = 6 - 3 = 3$.
+\end{note}
+
+\subsection{Row reduction}
+
+Reducing $A$ over $\mathbb{F}_2$ via elementary row operations:
+\[
+\begin{bmatrix}
+    1 & 0 & 1 & 0 & 0 & 1 \\
+    1 & 1 & 1 & 0 & 1 & 0 \\
+    1 & 1 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 1 & 1 & 0
+\end{bmatrix}
+\xrightarrow{R_2 \leftarrow R_2+R_1,\; R_3 \leftarrow R_3+R_1}
+\begin{bmatrix}
+    1 & 0 & 1 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 & 1 & 1 \\
+    0 & 1 & 1 & 1 & 0 & 1 \\
+    0 & 0 & 1 & 1 & 1 & 0
+\end{bmatrix}
+\xrightarrow{R_3 \leftarrow R_3+R_2}
+\begin{bmatrix}
+    1 & 0 & 1 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 & 1 & 1 \\
+    0 & 0 & 1 & 1 & 1 & 0 \\
+    0 & 0 & 1 & 1 & 1 & 0
+\end{bmatrix}
+\]
+\[
+\xrightarrow{R_4 \leftarrow R_4+R_3}
+\begin{bmatrix}
+    1 & 0 & 1 & 0 & 0 & 1 \\
+    0 & 1 & 0 & 0 & 1 & 1 \\
+    0 & 0 & 1 & 1 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\xrightarrow{R_1 \leftarrow R_1+R_3}
+\underbrace{\begin{bmatrix}
+    1 & 0 & 0 & 1 & 1 & 1 \\
+    0 & 1 & 0 & 0 & 1 & 1 \\
+    0 & 0 & 1 & 1 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}}_{\mathrm{rref}(A)}
+\]
+
+Pivot variables: $x_1, x_2, x_3$. Free variables: $x_4, x_5, x_6$.
+
+\subsection{Basis for \texorpdfstring{$C$}{C}}
+
+Setting $(x_4, x_5, x_6) = (s, t, u)$ and back-substituting:
+\begin{align*}
+    x_3 &= x_4 + x_5 = s + t, \\
+    x_2 &= x_5 + x_6 = t + u, \\
+    x_1 &= x_4 + x_5 + x_6 = s + t + u.
+\end{align*}
+
+The general codeword is
+\[
+    \mathbf{x}
+    = s\underbrace{\begin{pmatrix}1\\0\\1\\1\\0\\0\end{pmatrix}}_{\mathbf{v}_1}
+    + t\underbrace{\begin{pmatrix}1\\1\\1\\0\\1\\0\end{pmatrix}}_{\mathbf{v}_2}
+    + u\underbrace{\begin{pmatrix}1\\1\\0\\0\\0\\1\end{pmatrix}}_{\mathbf{v}_3},
+    \qquad s, t, u \in \mathbb{F}_2.
+\]
+
+\[
+    \text{Basis of } C = \left\{
+    \begin{pmatrix}1\\0\\1\\1\\0\\0\end{pmatrix},\;
+    \begin{pmatrix}1\\1\\1\\0\\1\\0\end{pmatrix},\;
+    \begin{pmatrix}1\\1\\0\\0\\0\\1\end{pmatrix}
+    \right\}.
+\]
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Syndrome Computation}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{example}
+Determine which of the received words
+\[
+    \mathbf{x} = (1,0,1,0,1,0)^{\top}, \qquad \mathbf{y} = (1,1,1,0,1,0)^{\top}
+\]
+is a valid codeword of $C$.
+\end{example}
+
+\begin{proof}[Solution]
+Compute the syndrome $A\mathbf{r} \pmod{2}$ for each received word.
+
+\textbf{Syndrome of $\mathbf{x}$:}
+\[
+    A\mathbf{x} =
+    \begin{pmatrix}
+        1{+}0{+}1{+}0{+}0{+}0\\
+        1{+}0{+}1{+}0{+}1{+}0\\
+        1{+}0{+}0{+}0{+}0{+}0\\
+        0{+}0{+}1{+}0{+}1{+}0
+    \end{pmatrix}
+    \equiv
+    \begin{pmatrix}0\\1\\1\\0\end{pmatrix} \pmod{2}.
+\]
+Since $A\mathbf{x} \neq \mathbf{0}$, $\mathbf{x}$ is \textbf{not} a valid codeword.
+
+\medskip
+\textbf{Syndrome of $\mathbf{y}$:}
+\[
+    A\mathbf{y} =
+    \begin{pmatrix}
+        1{+}0{+}1{+}0{+}0{+}0\\
+        1{+}1{+}1{+}0{+}1{+}0\\
+        1{+}1{+}0{+}0{+}0{+}0\\
+        0{+}0{+}1{+}0{+}1{+}0
+    \end{pmatrix}
+    \equiv
+    \begin{pmatrix}0\\0\\0\\0\end{pmatrix} \pmod{2}.
+\]
+Since $A\mathbf{y} = \mathbf{0}$, $\mathbf{y}$ is a \textbf{valid} codeword.
+(Indeed, $\mathbf{y} = \mathbf{v}_2$, one of the basis vectors.)
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Single-Bit Error Correction}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{proposition}
+$C$ is single-bit error correcting, i.e.\ the minimum Hamming distance satisfies
+$d_{\min} \geq 3$.
+\end{proposition}
+
+\begin{proof}
+For a binary linear code with parity check matrix $A$, $d_{\min} \geq 3$ if and
+only if every column of $A$ is nonzero and no two columns of $A$ are equal.
+The six columns of $A$ are
+\[
+    \mathbf{a}_1 = \begin{pmatrix}1\\1\\1\\0\end{pmatrix},\quad
+    \mathbf{a}_2 = \begin{pmatrix}0\\1\\1\\0\end{pmatrix},\quad
+    \mathbf{a}_3 = \begin{pmatrix}1\\1\\0\\1\end{pmatrix},\quad
+    \mathbf{a}_4 = \begin{pmatrix}0\\0\\1\\1\end{pmatrix},\quad
+    \mathbf{a}_5 = \begin{pmatrix}0\\1\\0\\1\end{pmatrix},\quad
+    \mathbf{a}_6 = \begin{pmatrix}1\\0\\0\\0\end{pmatrix}.
+\]
+All six are nonzero, and inspection shows they are pairwise distinct. Hence
+$d_{\min} \geq 3$, and $C$ can correct any single-bit transmission error.
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Syndrome Decoding}
+% ═════════════════════════════════════════════════════════════════════════════
+
+When a single-bit error occurs in position $i$, the received word $\mathbf{r}$
+satisfies $A\mathbf{r} = \mathbf{a}_i$ (the $i$-th column of $A$), because
+\[
+    A(\mathbf{c} + \mathbf{e}_i) = A\mathbf{c} + A\mathbf{e}_i
+    = \mathbf{0} + \mathbf{a}_i = \mathbf{a}_i,
+\]
+where $\mathbf{c}$ is the sent codeword and $\mathbf{e}_i$ is the standard
+basis vector with a $1$ in position $i$. The syndrome $\mathbf{s} = A\mathbf{r}$
+identifies the error position by matching $\mathbf{s}$ to the columns of $A$.
+
+\subsection{Syndrome lookup table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cc}
+    \hline
+    \textbf{Syndrome} $\mathbf{s}$ & \textbf{Error position} \\
+    \hline
+    $(1,1,1,0)^{\top}$ & 1 \\
+    $(0,1,1,0)^{\top}$ & 2 \\
+    $(1,1,0,1)^{\top}$ & 3 \\
+    $(0,0,1,1)^{\top}$ & 4 \\
+    $(0,1,0,1)^{\top}$ & 5 \\
+    $(1,0,0,0)^{\top}$ & 6 \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection{Decoding received words}
+
+\begin{example}
+For each received word below, determine the transmitted codeword:
+\[
+    \mathbf{a} = (1,1,1,1,1,1)^{\top}, \quad
+    \mathbf{b} = (0,1,0,1,0,1)^{\top}, \quad
+    \mathbf{c} = (0,0,0,1,1,1)^{\top}.
+\]
+\end{example}
+
+\begin{proof}[Solution]
+We compute the syndrome for each received word and consult the lookup table.
+
+\textbf{Word $\mathbf{a} = (1,1,1,1,1,1)^{\top}$:}
+\[
+    A\mathbf{a} \equiv
+    \begin{pmatrix}
+        1{+}0{+}1{+}0{+}0{+}1\\
+        1{+}1{+}1{+}0{+}1{+}0\\
+        1{+}1{+}0{+}1{+}0{+}0\\
+        0{+}0{+}1{+}1{+}1{+}0
+    \end{pmatrix}
+    \equiv
+    \begin{pmatrix}1\\0\\1\\1\end{pmatrix} \pmod{2}.
+\]
+The syndrome $(1,0,1,1)^{\top}$ does not match any entry in the lookup table,
+so $\mathbf{a}$ does not have a single-bit error (multiple errors have occurred
+or transmission was uncorrectable). No unique correction exists.
+
+\medskip
+\textbf{Word $\mathbf{b} = (0,1,0,1,0,1)^{\top}$:}
+\[
+    A\mathbf{b} \equiv
+    \begin{pmatrix}
+        0{+}0{+}0{+}0{+}0{+}1\\
+        0{+}1{+}0{+}0{+}0{+}0\\
+        0{+}1{+}0{+}1{+}0{+}0\\
+        0{+}0{+}0{+}1{+}0{+}0
+    \end{pmatrix}
+    \equiv
+    \begin{pmatrix}1\\1\\0\\1\end{pmatrix} \pmod{2}.
+\]
+The syndrome $(1,1,0,1)^{\top} = \mathbf{a}_3$ indicates an error in position $3$.
+Flipping bit 3: $\mathbf{b}' = (0,1,1,1,0,1)^{\top}$ is the transmitted codeword.
+We verify: $A\mathbf{b}' \equiv (0,0,0,0)^{\top}$.
+
+\medskip
+\textbf{Word $\mathbf{c} = (0,0,0,1,1,1)^{\top}$:}
+\[
+    A\mathbf{c} \equiv
+    \begin{pmatrix}
+        0{+}0{+}0{+}0{+}0{+}1\\
+        0{+}0{+}0{+}0{+}1{+}0\\
+        0{+}0{+}0{+}1{+}0{+}0\\
+        0{+}0{+}0{+}1{+}1{+}0
+    \end{pmatrix}
+    \equiv
+    \begin{pmatrix}1\\1\\1\\0\end{pmatrix} \pmod{2}.
+\]
+The syndrome $(1,1,1,0)^{\top} = \mathbf{a}_1$ indicates an error in position $1$.
+Flipping bit 1: $\mathbf{c}' = (1,0,0,1,1,1)^{\top}$ is the transmitted codeword.
+We verify: $A\mathbf{c}' \equiv (0,0,0,0)^{\top}$.
+\end{proof}

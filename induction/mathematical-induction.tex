@@ -1,0 +1,142 @@
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Mathematical Induction}
+% ═════════════════════════════════════════════════════════════════════════════
+
+The \defn{principle of mathematical induction} asserts: if $P(n_0)$ holds
+(\emph{base case}), and if $P(k) \Rightarrow P(k+1)$ for every $k \geq n_0$
+(\emph{inductive step}), then $P(n)$ holds for all integers $n \geq n_0$.
+The two examples below apply this technique to a divisibility claim and a sum
+inequality.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{A Divisibility Result}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{theorem}
+For all integers $n \geq 1$, $\;16 \mid 13^n + 20n + 15$.
+\end{theorem}
+
+\begin{proof}
+Let $P(n)$ denote the statement ``$16 \mid 13^n + 20n + 15$''.
+
+\bigskip
+\noindent\underline{Base case ($n = 1$).}
+\[
+    13^1 + 20(1) + 15 \;=\; 48 \;=\; 16 \times 3.
+\]
+Hence $16 \mid 48$, so $P(1)$ holds.
+
+\bigskip
+\noindent\underline{Inductive hypothesis (IH).}
+Assume $P(k)$ holds for some integer $k \geq 1$. That is, assume there exists
+$m \in \Z$ such that
+\[
+    13^k + 20k + 15 = 16m.
+\]
+Rearranging gives
+\[
+    13^k = 16m - 20k - 15. \tag{IH}
+\]
+
+\bigskip
+\noindent\underline{Inductive step.}
+We show $P(k+1)$ holds, i.e.\ that $16 \mid 13^{k+1} + 20(k+1) + 15$.
+
+\begin{align*}
+    13^{k+1} + 20(k+1) + 15
+    &= 13 \cdot 13^k + 20k + 35 \\
+    &= 13\bigl(16m - 20k - 15\bigr) + 20k + 35
+        \tag{by IH} \\
+    &= 208m - 260k - 195 + 20k + 35 \\
+    &= 208m - 240k - 160 \\
+    &= 16\underbrace{(13m - 15k - 10)}_{=:\,t\;\in\,\Z}.
+\end{align*}
+
+Hence $13^{k+1} + 20(k+1) + 15 = 16t$ with $t \in \Z$, so $P(k+1)$ holds.
+
+\bigskip
+By the principle of mathematical induction, $P(n)$ holds for all integers
+$n \geq 1$.
+\end{proof}
+
+\begin{remark}
+The integer $t = 13m - 15k - 10$ may be negative for small values of
+$m$ and $k$ (for instance, $m = 1, k = 1$ gives $t = -12$), so the universe
+for both $m$ and $t$ is $\Z$ rather than $\N$.
+\end{remark}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{A Sum Inequality}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\begin{theorem}
+For all integers $n \geq 2$,
+\[
+    \sum_{i=1}^{n} \frac{1}{i^2}
+    \;<\;
+    2 - \frac{1}{n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Let $P(n)$ denote the statement
+$\displaystyle\sum_{i=1}^{n} \dfrac{1}{i^2} < 2 - \dfrac{1}{n}$.
+
+\bigskip
+\noindent\underline{Base case ($n = 2$).}
+
+\noindent\textit{LHS\,:}
+$\displaystyle\frac{1}{1^2} + \frac{1}{2^2} = 1 + \frac{1}{4} = \frac{5}{4}$.
+
+\noindent\textit{RHS\,:}
+$\displaystyle 2 - \frac{1}{2} = \frac{3}{2}$.
+
+Since $\dfrac{5}{4} < \dfrac{3}{2}$, $P(2)$ holds.
+
+\bigskip
+\noindent\underline{Inductive hypothesis (IH).}
+Assume $P(k)$ holds for some integer $k \geq 2$:
+\[
+    \sum_{i=1}^{k} \frac{1}{i^2} < 2 - \frac{1}{k}. \tag{IH}
+\]
+
+\bigskip
+\noindent\underline{Inductive step.}
+We show $P(k+1)$, i.e.\
+$\displaystyle\sum_{i=1}^{k+1} \dfrac{1}{i^2} < 2 - \dfrac{1}{k+1}$.
+
+Starting from the left-hand side and applying (IH):
+\begin{equation}\label{eq:ih-applied}
+    \sum_{i=1}^{k+1} \frac{1}{i^2}
+    = \sum_{i=1}^{k} \frac{1}{i^2} + \frac{1}{(k+1)^2}
+    < 2 - \frac{1}{k} + \frac{1}{(k+1)^2}.
+\end{equation}
+
+It therefore suffices to show that the right-hand side of
+\eqref{eq:ih-applied} does not exceed $2 - \dfrac{1}{k+1}$:
+\begin{equation}\label{eq:aux}
+    2 - \frac{1}{k} + \frac{1}{(k+1)^2} \;\leq\; 2 - \frac{1}{k+1}.
+\end{equation}
+
+Rearranging \eqref{eq:aux}:
+\begin{align*}
+    \frac{1}{(k+1)^2}
+    &\leq \frac{1}{k} - \frac{1}{k+1}
+     = \frac{(k+1) - k}{k(k+1)}
+     = \frac{1}{k(k+1)}.
+\end{align*}
+
+This is equivalent to $k(k+1) \leq (k+1)^2$, i.e.\ $k \leq k+1$, which holds
+for all $k \in \Z$. Hence inequality \eqref{eq:aux} holds (strictly, since
+$k \geq 2$ gives $(k+1)^2 > k(k+1)$), so by transitivity with
+\eqref{eq:ih-applied},
+\[
+    \sum_{i=1}^{k+1} \frac{1}{i^2}
+    < 2 - \frac{1}{k+1},
+\]
+which is $P(k+1)$.
+
+\bigskip
+By the principle of mathematical induction, $P(n)$ holds for all integers
+$n \geq 2$.
+\end{proof}

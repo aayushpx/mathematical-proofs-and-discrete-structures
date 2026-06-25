@@ -1,0 +1,133 @@
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Properties of Functions}
+% ═════════════════════════════════════════════════════════════════════════════
+
+These notes examine injectivity, surjectivity, composition, and invertibility
+through a detailed worked example involving a function $f : \Rtwo \to \Rtwo$.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Definitions}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Let $f : A \to B$.
+
+\begin{definition}
+$f$ is \defn{injective} (one-to-one) if $f(x_1) = f(x_2) \Rightarrow x_1 = x_2$
+for all $x_1, x_2 \in A$.
+\end{definition}
+
+\begin{definition}
+$f$ is \defn{surjective} (onto) if for every $b \in B$ there exists $a \in A$
+with $f(a) = b$. The \defn{range} of $f$ is $\mathrm{Ran}(f) = \{f(a) : a \in A\}$.
+$f$ is surjective iff $\mathrm{Ran}(f) = B$.
+\end{definition}
+
+\begin{definition}
+$f$ is \defn{bijective} if it is both injective and surjective.
+\end{definition}
+
+\begin{definition}
+$f$ is \defn{invertible} if there exists $g : B \to A$ such that $g \circ f = \mathrm{id}_A$
+and $f \circ g = \mathrm{id}_B$. A function is invertible if and only if it is
+bijective.
+\end{definition}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{A Worked Example}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Let $f : \Rtwo \to \Rtwo$ and $g : \Rtwo \to \Rtwo$ be defined by
+\[
+    f(x, y) = (y - 2x,\; x^4 + 1),
+    \qquad
+    g(x, y) = (-y,\; 3 + x).
+\]
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Injectivity of \texorpdfstring{$f$}{f}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$f$ is not injective.
+\end{proposition}
+
+\begin{proof}
+Take $(x_1, y_1) = (1, 10)$ and $(x_2, y_2) = (-1, 6)$.
+\begin{align*}
+    f(1, 10) &= \bigl(10 - 2(1),\; 1^4 + 1\bigr) = (8, 2), \\
+    f(-1, 6) &= \bigl(6 - 2(-1),\; (-1)^4 + 1\bigr) = (8, 2).
+\end{align*}
+Since $f(1,10) = f(-1,6)$ but $(1,10) \neq (-1,6)$, $f$ is not injective.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Surjectivity of \texorpdfstring{$f$}{f} and its range}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$f$ is not surjective. Its range is
+$\mathrm{Ran}(f) = \{(u, v) \in \Rtwo : v \geq 1\}$.
+\end{proposition}
+
+\begin{proof}
+We show $(0, 0) \notin \mathrm{Ran}(f)$. Suppose $(x, y) \in \Rtwo$ satisfies
+$f(x,y) = (0,0)$. Then
+\begin{align}
+    y - 2x &= 0, \tag{1}\\
+    x^4 + 1 &= 0. \tag{2}
+\end{align}
+Equation (2) gives $x^4 = -1$, which has no real solution. Hence $(0,0) \notin
+\mathrm{Ran}(f)$, and $f$ is not surjective.
+
+For the range: since $x^4 \geq 0$ for all $x \in \R$, we have $x^4 + 1 \geq 1$,
+so the second component of $f(x,y)$ is always at least $1$. Conversely, for any
+$(u, v) \in \Rtwo$ with $v \geq 1$, set $x = (v-1)^{1/4}$ and $y = u + 2x$;
+then $f(x,y) = (y - 2x, x^4 + 1) = (u, v)$. Hence
+\[
+    \mathrm{Ran}(f) = \{(u, v) \in \Rtwo : v \geq 1\}. \qedhere
+\]
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{The composition \texorpdfstring{$f \circ g$}{f∘g}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$(f \circ g)(x, y) = (3 + x + 2y,\; y^4 + 1)$.
+\end{proposition}
+
+\begin{proof}
+\begin{align*}
+    (f \circ g)(x, y)
+    &= f\bigl(g(x, y)\bigr) \\
+    &= f(-y,\; 3 + x) \\
+    &= \bigl((3 + x) - 2(-y),\; (-y)^4 + 1\bigr) \\
+    &= (3 + x + 2y,\; y^4 + 1). \qedhere
+\end{align*}
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Invertibility of \texorpdfstring{$f \circ g$}{f∘g}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+% CORRECTION: The original argument stated "for f∘g to be invertible, both f
+% and g must be bijections". This is false in general: f∘g can be bijective
+% even when neither f nor g individually is. The correct argument uses range
+% containment: Ran(f∘g) ⊆ Ran(f) ⊊ R², so f∘g cannot be surjective.
+
+\begin{proposition}
+$f \circ g$ is not invertible.
+\end{proposition}
+
+\begin{proof}
+For any function $h : A \to C$ of the form $h = f \circ g$ with $g : A \to B$
+and $f : B \to C$, we have $\mathrm{Ran}(f \circ g) \subseteq \mathrm{Ran}(f)$.
+Since
+\[
+    \mathrm{Ran}(f) = \{(u,v) \in \Rtwo : v \geq 1\} \subsetneq \Rtwo,
+\]
+it follows that $\mathrm{Ran}(f \circ g) \subseteq \mathrm{Ran}(f) \subsetneq
+\Rtwo$. Hence $f \circ g$ is not surjective onto $\Rtwo$, and therefore not
+bijective, so not invertible.
+\end{proof}
+

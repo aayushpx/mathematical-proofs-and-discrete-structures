@@ -1,0 +1,492 @@
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Algebraic Structures}
+% ═════════════════════════════════════════════════════════════════════════════
+
+These notes progress through the algebraic hierarchy - from binary operations
+and monoids, to groups, subgroups, cosets, and homomorphisms - via three
+worked examples: a binary operation on $\Qstar$, a set of upper triangular
+integer matrices, and a group of $4 \times 4$ real matrices.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{A Binary Operation on \texorpdfstring{$\Qstar$}{Q*}}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Let $\Qstar = \{x \in \Q : x \neq 0\}$ and define $\otimes : \Qstar \times \Qstar
+\to \Qstar$ by
+\[
+    a \otimes b = 7ab.
+\]
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Basic properties}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$\otimes$ is associative.
+\end{proposition}
+\begin{proof}
+Let $a, b, c \in \Qstar$. Then
+\begin{align*}
+    (a \otimes b) \otimes c
+    &= (7ab) \otimes c = 7(7ab)c = 49abc, \\
+    a \otimes (b \otimes c)
+    &= a \otimes (7bc) = 7a(7bc) = 49abc.
+\end{align*}
+Since $(a \otimes b) \otimes c = a \otimes (b \otimes c)$, $\otimes$ is associative.
+\end{proof}
+
+\begin{proposition}
+$\otimes$ is commutative.
+\end{proposition}
+\begin{proof}
+For all $a, b \in \Qstar$: $a \otimes b = 7ab = 7ba = b \otimes a$.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Identity element}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$\otimes$ has identity element $e = \tfrac{1}{7}$.
+\end{proposition}
+\begin{proof}
+Let $e \in \Qstar$ satisfy $a \otimes e = a$ for all $a \in \Qstar$:
+\[
+    7ae = a \;\Longrightarrow\; e = \frac{1}{7}.
+\]
+Verification: $a \otimes \tfrac{1}{7} = 7a \cdot \tfrac{1}{7} = a$ and
+$\tfrac{1}{7} \otimes a = 7 \cdot \tfrac{1}{7} \cdot a = a$.
+Since $\tfrac{1}{7} \in \Qstar$, the identity exists.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Monoid and group structure}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$(\Qstar, \otimes)$ is a monoid.
+\end{proposition}
+\begin{proof}
+We verify the three monoid axioms:
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Closure.} For $a, b \in \Qstar$, $a \otimes b = 7ab \neq 0$,
+          so $7ab \in \Qstar$.
+    \item \textbf{Associativity.} Proved above.
+    \item \textbf{Identity.} $e = \tfrac{1}{7} \in \Qstar$ satisfies
+          $a \otimes e = e \otimes a = a$ for all $a \in \Qstar$.
+\end{enumerate}
+Hence $(\Qstar, \otimes)$ is a monoid.
+\end{proof}
+
+\begin{proposition}
+$(\Qstar, \otimes)$ is a group.
+\end{proposition}
+\begin{proof}
+It remains to show that every element has an inverse. Let $b$ be the inverse
+of $a \in \Qstar$, so that $a \otimes b = e = \tfrac{1}{7}$:
+\[
+    7ab = \frac{1}{7} \;\Longrightarrow\; b = \frac{1}{49a}.
+\]
+Since $a \in \Qstar$, we have $\tfrac{1}{49a} \in \Qstar$. Hence every element
+has an inverse, and $(\Qstar, \otimes)$ is a group.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Vector space over \texorpdfstring{$\Ztwo$}{Z\_2}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+% CORRECTION: The original argument was conceptually muddled. The correct
+% approach: in a Z_2-vector space, scalar multiplication by 2 = 0+0 in Z_2
+% requires 2·v = 0_V (the additive identity) for every vector v. Translating
+% to the multiplicative group (Q*, ⊗), "2·v = 0_V" becomes "v ⊗ v = e".
+% Checking this condition reveals it fails for generic elements.
+
+\begin{proposition}
+$(\Qstar, \otimes)$ is \textbf{not} a vector space over $\Ztwo$.
+\end{proposition}
+
+\begin{proof}
+In any vector space $V$ over $\Ztwo = \{0, 1\}$, the scalar $1+1 = 0$ in
+$\Ztwo$ forces
+\[
+    v + v = (1 + 1)\cdot v = 0 \cdot v = 0_V
+    \qquad \text{for all } v \in V,
+\]
+where $+$ and $0_V$ denote the vector-space addition and its identity.
+Translating to the multiplicative group $(\Qstar, \otimes)$: the role of
+addition is played by $\otimes$ and the identity is $e = \tfrac{1}{7}$, so
+the requirement becomes $v \otimes v = \tfrac{1}{7}$ for \emph{every}
+$v \in \Qstar$.
+
+However,
+\[
+    v \otimes v = 7v^2 = \frac{1}{7}
+    \;\Longrightarrow\;
+    v^2 = \frac{1}{49}
+    \;\Longrightarrow\;
+    v = \pm\frac{1}{7}.
+\]
+The condition $v \otimes v = e$ holds only for $v = \pm\tfrac{1}{7}$, not for
+all $v \in \Qstar$. Therefore $(\Qstar, \otimes)$ is not a vector space over
+$\Ztwo$.
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Upper Triangular Integer Matrices}
+% ═════════════════════════════════════════════════════════════════════════════
+
+Let
+\[
+    M = \left\{
+        \begin{bmatrix} a & b \\ 0 & c \end{bmatrix}
+        : a, b, c \in \Z
+    \right\},
+    \qquad
+    S = \left\{
+        \begin{bmatrix} 1 & b \\ 0 & 1 \end{bmatrix}
+        : b \in \Z
+    \right\}.
+\]
+
+We investigate the group and monoid structure of $M$ and $S$ under matrix
+addition and matrix multiplication. Matrix addition and multiplication are
+associative on $2\times 2$ integer matrices.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Group structure under addition}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$(M, +)$ is a group.
+\end{proposition}
+\begin{proof}
+Let $\alpha = \bigl[\begin{smallmatrix}a&b\\0&c\end{smallmatrix}\bigr]$ and
+$\beta = \bigl[\begin{smallmatrix}x&y\\0&z\end{smallmatrix}\bigr]$ be arbitrary
+elements of $M$.
+
+\textbf{Closure.}
+\[
+    \alpha + \beta
+    = \begin{bmatrix} a+x & b+y \\ 0 & c+z \end{bmatrix} \in M,
+\]
+since $\Z$ is closed under addition.
+
+\textbf{Identity.}
+The zero matrix $I_0 = \bigl[\begin{smallmatrix}0&0\\0&0\end{smallmatrix}\bigr]$
+satisfies $\alpha + I_0 = \alpha$, and $I_0 \in M$.
+
+\textbf{Inverses.}
+The additive inverse of $\alpha$ is
+\[
+    -\alpha = \begin{bmatrix} -a & -b \\ 0 & -c \end{bmatrix} \in M.
+\]
+
+\textbf{Associativity} is inherited from matrix addition.
+
+Hence $(M, +)$ is a group.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Monoid structure under multiplication and units}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$(M, \times)$ is a monoid.
+\end{proposition}
+\begin{proof}
+\textbf{Closure.}
+\[
+    \alpha \cdot \beta
+    = \begin{bmatrix} a & b \\ 0 & c \end{bmatrix}
+      \begin{bmatrix} x & y \\ 0 & z \end{bmatrix}
+    = \begin{bmatrix} ax & ay + bz \\ 0 & cz \end{bmatrix} \in M,
+\]
+since $\Z$ is closed under addition and multiplication.
+
+\textbf{Identity.}
+The standard identity $I = \bigl[\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\bigr]$
+satisfies $\alpha \cdot I = \alpha$, and $I \in M$ (since its $(2,1)$ entry is
+$0 \in \Z$ and all other entries are in $\Z$).
+
+\textbf{Associativity} is inherited from matrix multiplication.
+
+Hence $(M, \times)$ is a monoid.
+\end{proof}
+
+\begin{proposition}
+The units of $(M, \times)$ are precisely the matrices with $a = c = \pm 1$:
+\[
+    M^{\times} = \left\{
+        \begin{bmatrix} a & b \\ 0 & c \end{bmatrix} \in M
+        : a,\, c \in \{1, -1\},\; b \in \Z
+    \right\}.
+\]
+\end{proposition}
+\begin{proof}
+$\alpha \in M$ is a unit iff $\alpha^{-1}$ exists and lies in $M$.
+The standard $2\times 2$ matrix inverse gives
+\[
+    \alpha^{-1}
+    = \frac{1}{\det(\alpha)}
+      \begin{bmatrix} c & -b \\ 0 & a \end{bmatrix}
+    = \begin{bmatrix} 1/a & -b/(ac) \\ 0 & 1/c \end{bmatrix},
+\]
+provided $\det(\alpha) = ac \neq 0$. For $\alpha^{-1} \in M$, we need all
+entries to lie in $\Z$. The diagonal entries $1/a$ and $1/c$ lie in $\Z$ if
+and only if $a, c \in \{1, -1\}$; then $-b/(ac) = \pm b \in \Z$.
+Conversely, if $a, c \in \{1,-1\}$, the inverse above lies in $M$ and is
+indeed an inverse. Hence the units are exactly those $\alpha \in M$ with
+$a, c \in \{1, -1\}$ and $b \in \Z$.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{\texorpdfstring{$S$}{S} as a submonoid of \texorpdfstring{$M$}{M}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$(S, \times)$ is a submonoid of $(M, \times)$.
+\end{proposition}
+\begin{proof}
+We verify the two submonoid conditions.
+
+\textbf{Closure.} Let $A = \bigl[\begin{smallmatrix}1&b\\0&1\end{smallmatrix}\bigr]$
+and $B = \bigl[\begin{smallmatrix}1&x\\0&1\end{smallmatrix}\bigr]$ be in $S$.
+\[
+    A \cdot B
+    = \begin{bmatrix} 1 & x+b \\ 0 & 1 \end{bmatrix} \in S,
+\]
+since $x + b \in \Z$.
+
+\textbf{Identity.} The identity $I = \bigl[\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\bigr] \in S$
+(taking $b = 0$), and $I$ is the identity of $(M, \times)$.
+
+Hence $(S, \times)$ is a submonoid of $(M, \times)$.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Group structure under multiplication}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+$(M, \times)$ is not a group, but $(S, \times)$ is a group.
+\end{proposition}
+\begin{proof}
+\textbf{$(M, \times)$ is not a group.}
+The element $\alpha = \bigl[\begin{smallmatrix}7&0\\0&1\end{smallmatrix}\bigr] \in M$
+has inverse
+\[
+    \alpha^{-1} = \begin{bmatrix} 1/7 & 0 \\ 0 & 1 \end{bmatrix},
+\]
+but $1/7 \notin \Z$, so $\alpha^{-1} \notin M$. Since not every element of $M$
+has an inverse in $M$, $(M, \times)$ is not a group.
+
+\textbf{$(S, \times)$ is a group.}
+$(S, \times)$ is a monoid by the previous proposition. It remains to show
+every element has an inverse in $S$. Let $A = \bigl[\begin{smallmatrix}1&b\\0&1\end{smallmatrix}\bigr] \in S$.
+Its inverse is
+\[
+    A^{-1} = \begin{bmatrix} 1 & -b \\ 0 & 1 \end{bmatrix} \in S,
+\]
+since $-b \in \Z$. One checks $A \cdot A^{-1} = A^{-1} \cdot A = I$.
+Hence every element of $S$ is a unit, and $(S, \times)$ is a group.
+\end{proof}
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{A Matrix Group and Homomorphism}
+% ═════════════════════════════════════════════════════════════════════════════
+
+For $a, b \in \R$, define the $4 \times 4$ matrix
+\[
+    M[a, b]
+    =
+    \begin{bmatrix}
+        1 & a & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & b & 1
+    \end{bmatrix},
+\]
+and let $G = \{M[a,b] : a, b \in \R\}$. It is given that $(G, \times)$ is a
+group under matrix multiplication.
+
+\begin{note}
+A direct calculation shows that $M[a,b] \cdot M[c,d] = M[a+c,\, b+d]$, so
+the group operation on $G$ is simply componentwise addition in $\R^2$.
+\end{note}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Identity element}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+The identity element of $(G, \times)$ is $M[0, 0] = I_4$.
+\end{proposition}
+
+% CORRECTION: The original LaTeX displayed the two matrices in the product
+% M[a,b]·M[x,y] in reversed order (showing M[x,y] on the left). This is
+% corrected below so that M[a,b] appears on the left as written.
+
+\begin{proof}
+Let $e = M[x, y]$ satisfy $M[a,b] \cdot M[x,y] = M[a,b]$ for all $a,b \in \R$.
+\begin{align*}
+    M[a,b] \cdot M[x,y]
+    &=
+    \begin{bmatrix}
+        1 & a & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & b & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & x & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & y & 1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1 & a+x & 0 & 0 \\
+        0 & 1   & 0 & 0 \\
+        0 & 0   & 1 & 0 \\
+        0 & 0 & b+y & 1
+    \end{bmatrix}
+    = M[a+x,\, b+y].
+\end{align*}
+For this to equal $M[a,b]$, we need $a + x = a$ and $b + y = b$, giving $x = 0$
+and $y = 0$. Therefore the identity is
+\[
+    M[0,0]
+    =
+    \begin{bmatrix}
+        1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1
+    \end{bmatrix}
+    = I_4. \qedhere
+\]
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Inverses}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+The inverse of $M[a, b]$ in $(G, \times)$ is $M[-a, -b]$.
+\end{proposition}
+
+\begin{proof}
+Using the multiplication rule $M[a,b]\cdot M[c,d] = M[a+c,b+d]$:
+\[
+    M[a,b] \cdot M[-a,-b] = M[a+(-a),\, b+(-b)] = M[0,0] = e.
+\]
+Similarly $M[-a,-b]\cdot M[a,b] = M[0,0]$. Hence $M[a,b]^{-1} = M[-a,-b]$.
+\end{proof}
+
+\begin{example}
+The inverse of $M[2,3]$ is $M[-2,-3]$.
+\end{example}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{A subgroup \texorpdfstring{$H$}{H}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Let $H = \{M[a, 2a] : a \in \R\}$.
+
+\begin{proposition}
+$(H, \times)$ is a subgroup of $(G, \times)$.
+\end{proposition}
+
+\begin{proof}
+We verify the three subgroup conditions.
+
+\textbf{(i) Closure.}
+Take $M[a,2a], M[c,2c] \in H$. Then
+\[
+    M[a,2a] \cdot M[c,2c] = M[a+c,\, 2a+2c] = M[a+c,\, 2(a+c)] \in H,
+\]
+since $a + c \in \R$.
+
+\textbf{(ii) Identity.}
+$e = M[0,0] = M[0, 2\cdot 0] \in H$ (take $a = 0$).
+
+\textbf{(iii) Inverses.}
+For any $M[a,2a] \in H$, its inverse in $G$ is $M[-a,-2a] = M[-a, 2(-a)] \in H$
+(setting $b = -a$).
+
+Hence $(H, \times)$ is a subgroup of $(G, \times)$.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{A left coset of \texorpdfstring{$H$}{H}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{definition}
+For $g \in G$, the \defn{left coset} of $H$ containing $g$ is
+$gH = \{g \cdot h : h \in H\}$.
+\end{definition}
+
+\begin{example}
+Describe all elements of the left coset $C = M[2,3]H$.
+\end{example}
+
+\begin{proof}[Solution]
+\[
+    C = M[2,3]H = \bigl\{M[2,3] \cdot M[a,2a] : a \in \R\bigr\}.
+\]
+Using the multiplication rule:
+\[
+    M[2,3] \cdot M[a,2a] = M[2+a,\, 3+2a].
+\]
+Hence $C = \{M[2+a,\, 3+2a] : a \in \R\}$.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{A group homomorphism}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{proposition}
+The function $f : G \to \Rplus$ defined by $f(M[a,b]) = e^{a+b}$ is a group
+homomorphism from $(G, \times)$ to $(\Rplus, \times)$.
+\end{proposition}
+
+% CORRECTION: The original proof used M[x,y] as both a group element name and
+% as notation for a matrix with entries x,y, creating an ambiguity. Here the
+% second element is renamed M[c,d] throughout.
+
+\begin{proof}
+Let $M[a,b], M[c,d] \in G$. Then
+\begin{align*}
+    f\bigl(M[a,b] \cdot M[c,d]\bigr)
+    &= f\bigl(M[a+c,\, b+d]\bigr) \\
+    &= e^{(a+c)+(b+d)} \\
+    &= e^{(a+b)+(c+d)} \\
+    &= e^{a+b} \cdot e^{c+d} \\
+    &= f(M[a,b]) \cdot f(M[c,d]).
+\end{align*}
+Hence $f(xy) = f(x)f(y)$ for all $x, y \in G$, so $f$ is a homomorphism.
+\end{proof}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\subsection{Kernel of \texorpdfstring{$f$}{f}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+The identity of $(\Rplus, \times)$ is $1$.
+
+\begin{proposition}
+$\ker(f) = \{M[a,-a] : a \in \R\}$.
+\end{proposition}
+
+\begin{proof}
+\[
+    \ker(f) = \{M[a,b] \in G : f(M[a,b]) = 1\}.
+\]
+We have $f(M[a,b]) = e^{a+b} = 1$ if and only if $a + b = 0$, i.e.\ $b = -a$.
+Hence
+\[
+    \ker(f) = \{M[a,-a] : a \in \R\}. \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+Observe that $\ker(f)$ is exactly the set $H$ with the constraint changed from
+$b = 2a$ to $b = -a$; it is another subgroup of $G$, as one expects for the
+kernel of a homomorphism.
+\end{remark}
