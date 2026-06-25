@@ -68,8 +68,9 @@ Common packages used:
 amsmath, amssymb, amsthm, amsfonts, geometry, fancyhdr, enumitem, tikz, blkarray, hyperref
 
 All packages are available via standard TeX Live installations.
+
+## Repository Structure
 ```bash
-Repository Structure
 discrete-mathematics-notes/
 ├── README.md
 ├── .gitignore
