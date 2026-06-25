@@ -49,10 +49,18 @@ Each `.tex` file is self-contained and can be compiled independently.
 ### Compile a single file:
 ```bash
 latexmk -pdf logic/propositional-logic.tex
+```
+
 Build all documents:
+```bash
 ./build.sh
+```
+
 Clean auxiliary files:
+```bash
 find . -type f \( -name "*.aux" -o -name "*.log" -o -name "*.toc" -o -name "*.out" \) -delete
+```
+
 🧾 Requirements
 A TeX distribution (TeX Live or MiKTeX)
 latexmk
@@ -84,6 +92,5 @@ All material is written in a consistent mathematical style using a shared preamb
 Proofs are fully written out for clarity, even when results are standard.
 
 The focus is on readability, structure, and mathematical reasoning rather than brevity.
-
 
 ---
