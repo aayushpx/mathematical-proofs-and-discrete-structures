@@ -6,7 +6,7 @@ The material is organised by topic rather than by assignment, with an emphasis o
 
 ---
 
-## 📘 Preview
+## Preview
 
 <p align="center">
   <img src="images/preview1.png" width="30%">
@@ -16,7 +16,7 @@ The material is organised by topic rather than by assignment, with an emphasis o
 
 ---
 
-## 📚 Topics Covered
+## Topics Covered
 
 | Folder | Topics |
 |--------|--------|
@@ -31,7 +31,7 @@ The material is organised by topic rather than by assignment, with an emphasis o
 
 ---
 
-## 📌 Prerequisites
+## Prerequisites
 
 This repository assumes familiarity with:
 
@@ -42,7 +42,7 @@ This repository assumes familiarity with:
 
 ---
 
-## ⚙️ Building the Documents
+## Building the Documents
 
 Each `.tex` file is self-contained and can be compiled independently.
 
@@ -61,7 +61,7 @@ Clean auxiliary files:
 find . -type f \( -name "*.aux" -o -name "*.log" -o -name "*.toc" -o -name "*.out" \) -delete
 ```
 
-## 🧾 Requirements
+## Requirements
 A TeX distribution (TeX Live or MiKTeX)
 latexmk
 
@@ -70,7 +70,7 @@ amsmath, amssymb, amsthm, amsfonts, geometry, fancyhdr, enumitem, tikz, blkarray
 
 All packages are available via standard TeX Live installations.
 ```bash
-📁 Repository Structure
+Repository Structure
 discrete-mathematics-notes/
 ├── README.md
 ├── .gitignore
@@ -86,7 +86,7 @@ discrete-mathematics-notes/
 ├── coding-theory/
 └── graph-theory/
 ```
-🧠 Notes on Content
+## Notes on Content
 
 All material is written in a consistent mathematical style using a shared preamble.
 
