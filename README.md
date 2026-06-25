@@ -61,7 +61,7 @@ Clean auxiliary files:
 find . -type f \( -name "*.aux" -o -name "*.log" -o -name "*.toc" -o -name "*.out" \) -delete
 ```
 
-🧾 Requirements
+## 🧾 Requirements
 A TeX distribution (TeX Live or MiKTeX)
 latexmk
 
@@ -69,7 +69,7 @@ Common packages used:
 amsmath, amssymb, amsthm, amsfonts, geometry, fancyhdr, enumitem, tikz, blkarray, hyperref
 
 All packages are available via standard TeX Live installations.
-
+```bash
 📁 Repository Structure
 discrete-mathematics-notes/
 ├── README.md
@@ -85,6 +85,7 @@ discrete-mathematics-notes/
 ├── cryptography/
 ├── coding-theory/
 └── graph-theory/
+```
 🧠 Notes on Content
 
 All material is written in a consistent mathematical style using a shared preamble.
