@@ -27,7 +27,6 @@ The material is organised by topic rather than by assignment, with an emphasis o
 | `algebra/` | Binary operations, groups, subgroups, cosets, homomorphisms |
 | `cryptography/` | RSA cryptosystem, modular arithmetic, Euclidean algorithm |
 | `coding-theory/` | Binary linear codes, parity-check matrices, syndrome decoding |
-| `graph-theory/` | Graph representations, Eulerian paths, adjacency matrices, cycle structure |
 
 ---
 
